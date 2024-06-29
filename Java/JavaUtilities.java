@@ -1,5 +1,3 @@
-package main.java.de.sandwich.Java;
-
 import java.util.HashSet;
 
 /**

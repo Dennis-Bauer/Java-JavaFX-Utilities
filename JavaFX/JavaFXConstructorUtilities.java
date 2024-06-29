@@ -1,5 +1,3 @@
-package de.sandwich.DennisUtilitiesPackage.JavaFX;
-
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;

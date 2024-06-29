@@ -1,5 +1,3 @@
-package main.java.de.sandwich.Java;
-
 /**
  *  <h2>Utilities for Java and JavaFx to create graphical programs</h2>
  *  <p>
