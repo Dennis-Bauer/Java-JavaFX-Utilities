@@ -17,8 +17,12 @@ import java.util.HashSet;
 
 public class JavaUtilities {
 
-    /**
-     * This method builds a long string using a string code that means a line break
+   /**
+     * IMPOERTANT:
+     * To build a long string with fixed values, use the """ """ tactic. 
+     * You can create a string that spans multiple lines by simply using line breaks within the string.
+     *
+     * This method builds a long string using a string code that means a line break.
      * @param text Every string that is given here as input is called a line, so every new string is called a line break.
      * @return Returns the new String with the line breaks (String codes).
      */
