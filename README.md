@@ -19,7 +19,7 @@ Each method is well-documented and explains what it does.
 4. If it doesn't work automatically, don't forget to import.
 
 ```java
-import com.example.deinprojekt.SaveDataUtilities;
+import com.example.yourProject.SaveDataUtilities;
 
 public class Main {
     public static void main(String[] args) {
@@ -32,7 +32,7 @@ public class Main {
 ### Usage
 #### Save and load data
 ```java
-import com.example.deinprojekt.SaveDataUtilities;
+import com.example.yourProject.SaveDataUtilities;
 
 public class Main {
     public static void main(String[] args) {
@@ -49,19 +49,19 @@ public class Main {
 
 #### Formatted console output
 ```java
-import com.example.deinprojekt.ConsoleUtilities;
+import com.example.yourProject.ConsoleUtilities;
 
 public class Main {
     public static void main(String[] args) {
         // Print text that is red and bold
-        ConsoleUtilities.consoleOutPut(ConsoleUtilities.colors.RED, ConsoleUtilities.textStyle.BOLD, "WOW So schön");
+        ConsoleUtilities.consoleOutPut(ConsoleUtilities.colors.RED, ConsoleUtilities.textStyle.BOLD, "Hello, world!");
     }
 }
 ```
 
 #### Create JavaFX shapes
 ```java
-import com.example.deinprojekt.JavaFXConstructorUtilities;
+import com.example.yourProject.JavaFXConstructorUtilities;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
