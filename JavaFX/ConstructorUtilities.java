@@ -350,8 +350,8 @@ public class JavaFXConstructorUtilities {
      */
     public static TextField buildTextField(String id ,String promptText, double width, double height, double x, double y) {
         TextField t = buildTextField(id, promptText, width, height);
-        t.setScaleX(x);
-        t.setScaleY(y);
+        t.setLayoutX(x);
+        t.setLayoutY(y);
         return t;
     }
 
