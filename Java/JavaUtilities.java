@@ -35,6 +35,20 @@ public class JavaUtilities {
         }
         return s.toString();
     }
+   
+    /**
+     * This method checks whether a string contains a number, or not.
+     * @param s The string.
+     * @return Returns true when the string is a number, false when not.
+     */
+    public static boolean isStringInt(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
     /**
      * This method checks whether an array has a duplicate.
