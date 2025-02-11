@@ -119,9 +119,8 @@ public class ConsoleUtilities {
                     case WHITE ->   colorCode = colorCode + "0;107m";
                 }
             }
-            default -> {
-                System.out.println("Error, cannot print this typ!");
-            }
+            default -> System.out.println("Error, cannot print this typ!");
+            
         }
         return colorCode;
     }
