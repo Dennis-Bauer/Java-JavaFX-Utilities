@@ -120,7 +120,7 @@ public class ConsoleUtilities {
                 }
             }
             default -> {
-                System.out.println("Errro, cannot print this typ!");
+                System.out.println("Error, cannot print this typ!");
             }
         }
         return colorCode;
