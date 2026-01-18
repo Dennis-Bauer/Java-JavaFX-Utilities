@@ -14,11 +14,17 @@ package de.dennis.lieferkette.Utils;
  * <p>
  * 
  * @author bauer
- * @version 1.0
+ * @version 1.1
  * @since 16.03.2024
  */
 
 public class ConsoleUtilities {
+
+  private static final boolean DEFAULT_BAR_SHOW_PERCENT = false;
+  private static final char DEFAULT_BAR_CHAR = '━';
+  private static final int DEFAULT_BAR_SIZE = 100;
+  private static final colors DEFAULT_BAR_COLOR_EMPTY = colors.BLACK;
+  private static final colors DEFAULT_BAR_COLOR_FULL = colors.WHITE;
 
   public static final String RESET = "\033[0m"; // Text Reset
 
@@ -59,26 +65,89 @@ public class ConsoleUtilities {
     System.out.print(getTextCode(color, style) + text + RESET);
   }
 
+  /**
+   * Creates a progress bar with the given settings.
+   *
+   * @param goalAmount
+   *        The goal number to reach.
+   * @return A progress bar object.
+   */
   public static ProgressBar createProgressBar(int goalAmount) {
     return new ProgressBar(goalAmount, DEFAULT_BAR_SHOW_PERCENT, DEFAULT_BAR_CHAR, DEFAULT_BAR_COLOR_EMPTY,
         DEFAULT_BAR_COLOR_FULL, DEFAULT_BAR_SIZE);
   }
 
+  /**
+   * Creates a progress bar with the given settings.
+   *
+   * @param goalAmount
+   *        The goal number to reach.
+   * @param showPercent
+   *        Set to `true` if you want to show a percentage after the progress bar.
+   *        Set to `false` if you want to show the progress as `progress/goal`.
+   * @return A progress bar object.
+   */
   public static ProgressBar createProgressBar(int goalAmount, boolean showPercent) {
     return new ProgressBar(goalAmount, showPercent, DEFAULT_BAR_CHAR, DEFAULT_BAR_COLOR_EMPTY, DEFAULT_BAR_COLOR_FULL,
         DEFAULT_BAR_SIZE);
   }
 
+  /**
+   * Creates a progress bar with the given settings.
+   *
+   * @param goalAmount
+   *        The goal number to reach.
+   * @param showPercent
+   *        Set to `true` if you want to show a percentage after the progress bar.
+   *        Set to `false` if you want to show the progress as `progress/goal`.
+   * @param barSize
+   *        The length of the progress bar.
+   * @return A progress bar object.
+   */
   public static ProgressBar createProgressBar(int goalAmount, boolean showPercent, int barSize) {
     return new ProgressBar(goalAmount, showPercent, DEFAULT_BAR_CHAR, DEFAULT_BAR_COLOR_EMPTY, DEFAULT_BAR_COLOR_FULL,
         barSize);
   }
 
+  /**
+   * Creates a progress bar with the given settings.
+   *
+   * @param goalAmount
+   *        The goal number to reach.
+   * @param showPercent
+   *        Set to `true` if you want to show a percentage after the progress bar.
+   *        Set to `false` if you want to show the progress as `progress/goal`.
+   * @param barChar
+   *        The character that represents the progress bar.
+   * @param barColorEmpty
+   *        The color of the empty part of the progress bar.
+   * @param barColorFull
+   *        The color of the full part of the progress bar.
+   * @return A progress bar object.
+   */
   public static ProgressBar createProgressBar(int goalAmount, boolean showPercent, char barChar, colors barColorEmpty,
       colors barColorFull) {
     return new ProgressBar(goalAmount, showPercent, barChar, barColorEmpty, barColorFull, DEFAULT_BAR_SIZE);
   }
 
+  /**
+   * Creates a progress bar with the given settings.
+   *
+   * @param goalAmount
+   *        The goal number to reach.
+   * @param showPercent
+   *        Set to `true` if you want to show a percentage after the progress bar.
+   *        Set to `false` if you want to show the progress as `progress/goal`.
+   * @param barChar
+   *        The character that represents the progress bar.
+   * @param barColorEmpty
+   *        The color of the empty part of the progress bar.
+   * @param barColorFull
+   *        The color of the full part of the progress bar.
+   * @param barSize
+   *        The length of the progress bar.
+   * @return A progress bar object.
+   */
   public static ProgressBar createProgressBar(int goalAmount, boolean showPercent, char barChar, colors barColorEmpty,
       colors barColorFull, int barSize) {
     return new ProgressBar(goalAmount, showPercent, barChar, barColorEmpty, barColorFull, barSize);
@@ -165,4 +234,144 @@ public class ConsoleUtilities {
     return colorCode;
   }
 
+  public static class ProgressBar {
+
+    private final int goal;
+    private final boolean showPercent;
+    private final char barChar;
+    private final int barSize;
+    private final colors barColorEmpty;
+    private final colors barColorFull;
+
+    private boolean showBar = true;
+    private int progress = 0;
+
+    /**
+     * With the progressbar object you can control the progress bar in many ways.
+     * 
+     * @param goalAmount
+     *        The goal number to reach.
+     * @param showPercent
+     *        Set to `true` if you want to show a percentage after the progress bar.
+     *        Set to `false` if you want to show the progress as `progress/goal`.
+     * @param barChar
+     *        The character that represents the progress bar.
+     * @param barColorEmpty
+     *        The color of the empty part of the progress bar.
+     * @param barColorFull
+     *        The color of the full part of the progress bar.
+     * @param barSize
+     *        The length of the progress bar.
+     */
+    public ProgressBar(int goalAmount, boolean showPercent, char barChar, colors barColorEmpty, colors barColorFull,
+        int barSize) {
+      this.goal = goalAmount;
+      this.showPercent = showPercent;
+      this.barChar = barChar;
+      this.barColorEmpty = barColorEmpty;
+      this.barColorFull = barColorFull;
+      this.barSize = barSize;
+    }
+
+    /**
+     * Sets the progress to 0
+     */
+    public void clearProgress() {
+      this.progress = 0;
+      updateBar();
+    }
+
+    /**
+     * Set the progress to the given value
+     * 
+     * @param progress
+     *        The value to what the progress should get set
+     */
+    public void setProgress(int progress) {
+      this.progress = progress;
+      if (this.showBar)
+        updateBar();
+    }
+
+    /**
+     * Increases the progress by one
+     */
+    public void increasesProgress() {
+      this.progress++;
+      if (this.showBar)
+        updateBar();
+    }
+
+    /**
+     * Adds the given number to the progress
+     * 
+     * @param amount
+     *        The amount which should get added to the progress
+     */
+    public void addToProgress(int amount) {
+      this.progress = this.progress + amount;
+      if (this.showBar)
+        updateBar();
+    }
+
+    /**
+     * Hides the progressbar
+     */
+    public void hide() {
+      if (this.showBar) {
+        this.showBar = false;
+        this.updateBar();
+      }
+    }
+
+    /**
+     * Shows the progress bar
+     */
+    public void show() {
+      if (!this.showBar) {
+        this.showBar = true;
+        this.updateBar();
+      }
+    }
+
+    /**
+     * Updates the progressbar
+     */
+    private void updateBar() {
+
+      if (!this.showBar) {
+        System.out.print(
+            "\r" + " ".repeat(this.barSize + 15) + "\n");
+        return;
+      }
+
+      if (this.goal >= this.progress) {
+        int filled = (int) Math.floor((double) this.progress / this.goal * this.barSize);
+
+        StringBuilder bar = new StringBuilder();
+
+        bar.append(getTextCode(barColorFull, textStyle.BOLD))
+            .append((this.barChar + "").repeat(filled))
+            .append(getTextCode(barColorEmpty, textStyle.BOLD))
+            .append((this.barChar + "").repeat(this.barSize - filled))
+            .append(RESET);
+
+        String prefix;
+        if (showPercent) {
+          int percent = (int) Math.floor((double) ((double) this.progress / (double) this.goal) * 100);
+
+          // System.out.println(((double) this.progress / (double) this.goal) * 100);
+
+          prefix = (this.progress >= this.goal ? 100 : percent) + "% ";
+        } else {
+          prefix = String.format("%02d", this.progress) + "/" + this.goal + " ";
+        }
+
+        System.out.print(
+            "\r" + bar.toString() + " " + prefix);
+      }
+
+    }
+
+  }
 }
